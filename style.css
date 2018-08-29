@@ -1,40 +1,56 @@
-
 .row {
     margin: 0;
     padding: 0;
-    height: 20px;
+    height: 50px;
 }
 
 .cell {
     display: inline-block;
-    width: 20px;
-    height: 20px;
+    width: 50px;
+    height: 50px;
     margin: 0;
     padding: 0;
 }
 
 .wall {
-    background-color:black;
+    background-color: #bf491e;
+    border-radius: 15%;
+    background-image: url(brickWall.jpeg);
 }
 
 .start {
-    background-color:green;
-    
-} 
-.finish {
-    background-color: red;
+    background-color: green;
 }
 
 .player {
-    background-color: blueviolet;
+    /* background-color: blueviolet; */
     border-radius: 50%;
+    background-image: url(gnome2.jpeg);
 }
+
 .box {
+    /* background-color: gray; */
+    border-radius: 25%;
+    z-index: 1;
+    background-image: url(box.jpeg);
+    image-rendering: auto;
    
-    background-color: gray
 }
 
 .boxDestination {
-background-color: pink;
-border-radius: 50%;
+    background-color: pink;
+    border-radius: 50%;
 }
+
+.boxStorageLocation {
+    background-color: palegreen;
+    border-radius: 25%
+}
+
+#gameboard {
+    font-size: larger;
+}
+
+/* [data-hallType-start] {
+background-color: pink;
+} */
