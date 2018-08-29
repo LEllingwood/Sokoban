@@ -59,20 +59,22 @@ function createCellElement(cellCharacter, rowIndex, cellIndex) {
         case "S":
             cellElement.dataset.type = "hall"
             cellElement.dataset.hallType = "start"
+            cellElement.classList.add("start")
             break
         case "B":
             cellElement.dataset.type = "hall"
             cellElement.dataset.hallType = "normal"
-            cellElement.classList.add("box")
+            !cellElement.classList.add("box")
             break
         case "O":
             cellElement.dataset.type = "hall"
             cellElement.dataset.hallType = "destination"
+            cellElement.classList.add("boxDestination");
             break
         case "X":
             cellElement.dataset.type = "hall"
             cellElement.dataset.hallType = "destination"
-            cellElement.classList.add("box")
+            !cellElement.classList.add("box")
             break
     }
     // fiddle with the formatting to separate items and need to make "box" class more important than "cell" class
@@ -87,11 +89,13 @@ function moveToward(nextCellElement, keyName) {
      // if (nextCellElement +1.dataset.type === "hall")
         nextCellElement.appendChild(playerElement) 
     }
-// function nextCellPlusOne(){
-    // write function looking at one cell beyond nextCellElement (in a)
+// function nextCellPlusOne(nextCellElement, rowIndex, cellIndex){
+    // let checkTheNextTwoCells = nextCellElement + 1
+    // if (checkTheNextTwoCells
+    // }
 
-// }
-    // if (cellElement.classList.contains("box")){  
+    // write function looking at one cell beyond nextCellElement (in a)
+    // if (nextCellElement.classList.contains("box")){  
         // check via type to see if it's a wall.  maybe move this up one line (if statment)
 // somewhere we will check the cell to see if it's a wall or a box. remove box class from one cell element only when the next two boxes are halls (and adding it to the one after).
 // }

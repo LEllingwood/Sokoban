@@ -1,3 +1,8 @@
+/* body {
+    display: flex;
+    align-items: center;
+} */
+
 .row {
     margin: 0;
     padding: 0;
@@ -34,12 +39,15 @@
     z-index: 1;
     background-image: url(box.jpeg);
     image-rendering: auto;
+    /* border: 1px solid black; */
    
 }
 
 .boxDestination {
     background-color: pink;
     border-radius: 50%;
+    /* border: 2px solid black; */
+    padding: 0;
 }
 
 .boxStorageLocation {
