@@ -51,30 +51,32 @@ function createCellElement(cellCharacter, rowIndex, cellIndex) {
     switch (cellCharacter) {
         case "W":
             cellElement.dataset.type = "wall"
+            cellElement.classList.add("wall")
             break
         case " ":
             cellElement.dataset.type = "hall"
-            cellElement.dataset.hallType = "normal"
+            // cellElement.dataset.hallType = "normal"
+            cellElement.classList.add("hall")
             break
         case "S":
             cellElement.dataset.type = "hall"
-            cellElement.dataset.hallType = "start"
+            // cellElement.dataset.hallType = "start"
             cellElement.classList.add("start")
             break
         case "B":
             cellElement.dataset.type = "hall"
-            cellElement.dataset.hallType = "normal"
+            // cellElement.dataset.hallType = "normal"
             cellElement.classList.add("box")
             break
         case "O":
             cellElement.dataset.type = "hall"
-            cellElement.dataset.hallType = "destination"
+            // cellElement.dataset.hallType = "destination"
             cellElement.classList.add("boxDestination");
             break
         case "X":
             cellElement.dataset.type = "hall"
-            cellElement.dataset.hallType = "destination"
-            cellElement.classList.add("box")
+            // cellElement.dataset.hallType = "destination"
+            cellElement.classList.add("box", "boxDestination")
             break
     }
     // fiddle with the formatting to separate items and need to make "box" class more important than "cell" class
@@ -102,8 +104,6 @@ function checkNextTwoCells(rowIndex, cellIndex) {
 // check via type to see if it's a wall.  maybe move this up one line (if statment)
 // somewhere we will check the cell to see if it's a wall or a box. remove box class from one cell element only when the next two boxes are halls (and adding it to the one after).
 // }
-
-
 function findCellByCoordinates(rowIndex, cellIndex) {
     const rowIndexSelector = "[data-row-index='" + rowIndex + "']"
     const cellIndexSelector = "[data-cell-index='" + cellIndex + "']"
@@ -125,12 +125,13 @@ document.addEventListener('keydown', (event) => {
         if (newCellNode.dataset.type !== "wall") {
             moveToward(newCellNode, keyName)
             playerPosition.row += 1
+            newCellNode.classList.remove("box")
         }
         let newBoxNode = checkNextTwoCells(rowIndex + 2, cellIndex)
         // console.log(newBoxNode.classList.contains("box"))
         console.log(newBoxNode)
         if (newBoxNode.dataset.type !== "wall" || newBoxNode.classList.contains("box")){
-            console.log("hello")
+            console.log("down")
             newBoxNode.classList.remove("hall", "start", "boxDestination")
             // newBoxNode.dataset.type.remove("hall")
             newBoxNode.classList.add("box")
@@ -142,24 +143,26 @@ document.addEventListener('keydown', (event) => {
         if (newCellNode.dataset.type !== "wall") {
             moveToward(newCellNode, keyName)
             playerPosition.row -= 1
+            newCellNode.classList.remove("box")
         }
         let newBoxNode = checkNextTwoCells(rowIndex - 2, cellIndex)
         if (newBoxNode.dataset.type !== "wall" || newBoxNode.classList.contains("box")){
-            console.log("hello")
+            console.log("up")
             newBoxNode.classList.remove("hall", "start", "boxDestination")
             // newBoxNode.dataset.type.remove("hall")
             newBoxNode.classList.add("box")
             }
     }
     if (keyName === "ArrowLeft") {
-        let newCellNode = findCellByCoordinates(rowIndex, cellIndex - 2)
+        let newCellNode = findCellByCoordinates(rowIndex, cellIndex - 1)
         if (newCellNode.dataset.type !== "wall") {
             moveToward(newCellNode, keyName)
             playerPosition.column -= 1
+            newCellNode.classList.remove("box")
         }
         let newBoxNode = checkNextTwoCells(rowIndex, cellIndex - 2)
         if (newBoxNode.dataset.type !== "wall" || newBoxNode.classList.contains("box")){
-            console.log("hello")
+            console.log("left")
             newBoxNode.classList.remove("hall", "start", "boxDestination")
             // newBoxNode.dataset.type.remove("hall")
             newBoxNode.classList.add("box")
@@ -168,13 +171,15 @@ document.addEventListener('keydown', (event) => {
 
     if (keyName === "ArrowRight") {
         let newCellNode = findCellByCoordinates(rowIndex, cellIndex + 1)
-        if (newCellNode.dataset.type !== "wall") {
+        if (newCellNode.dataset.type !== "wall" || newCellNode.classList.contains("box")){
+            // if (newCellNode.dataset.type !== "wall"){
             moveToward(newCellNode, keyName)
             playerPosition.column += 1
+            newCellNode.classList.remove("box")
         }
-        let newBoxNode = checkNextTwoCells(rowIndex + 2, cellIndex)
+        let newBoxNode = checkNextTwoCells(rowIndex, cellIndex + 2)
         if (newBoxNode.dataset.type !== "wall" || newBoxNode.classList.contains("box")){
-            console.log("hello")
+            console.log("right")
             newBoxNode.classList.remove("hall", "start", "boxDestination")
             // newBoxNode.dataset.type.remove("hall")
             newBoxNode.classList.add("box")
