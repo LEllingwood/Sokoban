@@ -18,7 +18,6 @@
 }
 
 .wall {
-    background-color: #bf491e;
     border-radius: 15%;
     background-image: url(brickWall.jpeg);
 }
@@ -31,6 +30,7 @@
     /* background-color: blueviolet; */
     border-radius: 50%;
     background-image: url(gnome2.jpeg);
+    z-index: 1;
 }
 
 .box {

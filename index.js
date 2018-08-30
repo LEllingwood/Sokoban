@@ -64,7 +64,7 @@ function createCellElement(cellCharacter, rowIndex, cellIndex) {
         case "B":
             cellElement.dataset.type = "hall"
             cellElement.dataset.hallType = "normal"
-            !cellElement.classList.add("box")
+            cellElement.classList.add("box")
             break
         case "O":
             cellElement.dataset.type = "hall"
@@ -74,7 +74,7 @@ function createCellElement(cellCharacter, rowIndex, cellIndex) {
         case "X":
             cellElement.dataset.type = "hall"
             cellElement.dataset.hallType = "destination"
-            !cellElement.classList.add("box")
+            cellElement.classList.add("box")
             break
     }
     // fiddle with the formatting to separate items and need to make "box" class more important than "cell" class
@@ -86,25 +86,30 @@ function createCellElement(cellCharacter, rowIndex, cellIndex) {
 // switch case is basically a big if else statement
 
 function moveToward(nextCellElement, keyName) {
-     // if (nextCellElement +1.dataset.type === "hall")
-        nextCellElement.appendChild(playerElement) 
-    }
-// function nextCellPlusOne(nextCellElement, rowIndex, cellIndex){
-    // let checkTheNextTwoCells = nextCellElement + 1
-    // if (checkTheNextTwoCells
-    // }
+    nextCellElement.appendChild(playerElement)
+}
+// write function looking at one cell beyond nextCellElement (in a).  Does this work?
+function checkNextTwoCells(rowIndex, cellIndex) {
+    const rowIndexSelector = "[data-row-index='" + (rowIndex) + "']"
+    console.log(rowIndexSelector)
+    const cellIndexSelector = "[data-cell-index='" + (cellIndex) + "']"
+    const cellSelector = "#gameboard .row " + rowIndexSelector + cellIndexSelector
+    return document.querySelector(cellSelector)
 
-    // write function looking at one cell beyond nextCellElement (in a)
-    // if (nextCellElement.classList.contains("box")){  
-        // check via type to see if it's a wall.  maybe move this up one line (if statment)
+}
+
+// if (nextCellElement.classList.contains("box")){  
+// check via type to see if it's a wall.  maybe move this up one line (if statment)
 // somewhere we will check the cell to see if it's a wall or a box. remove box class from one cell element only when the next two boxes are halls (and adding it to the one after).
 // }
+
 
 function findCellByCoordinates(rowIndex, cellIndex) {
     const rowIndexSelector = "[data-row-index='" + rowIndex + "']"
     const cellIndexSelector = "[data-cell-index='" + cellIndex + "']"
     const cellSelector = "#gameboard .row " + rowIndexSelector + cellIndexSelector
     return document.querySelector(cellSelector)
+
     // this function will search the DOM for a cell that meets both the row and cell types
 }
 
@@ -113,13 +118,23 @@ document.addEventListener('keydown', (event) => {
     let keyName = event.key;
     let rowIndex = playerPosition.row
     let cellIndex = playerPosition.column
+
     if (keyName === "ArrowDown") {
         let newCellNode = findCellByCoordinates(rowIndex + 1, cellIndex)
-        // let newBoxNode = findCellByCoordinates(rowIndex + 2, cell Index)
+        console.log(newCellNode)
         if (newCellNode.dataset.type !== "wall") {
             moveToward(newCellNode, keyName)
             playerPosition.row += 1
         }
+        let newBoxNode = checkNextTwoCells(rowIndex + 2, cellIndex)
+        // console.log(newBoxNode.classList.contains("box"))
+        console.log(newBoxNode)
+        if (newBoxNode.dataset.type !== "wall" || newBoxNode.classList.contains("box")){
+            console.log("hello")
+            newBoxNode.classList.remove("hall", "start", "boxDestination")
+            // newBoxNode.dataset.type.remove("hall")
+            newBoxNode.classList.add("box")
+            }
     }
 
     if (keyName === "ArrowUp") {
@@ -128,13 +143,27 @@ document.addEventListener('keydown', (event) => {
             moveToward(newCellNode, keyName)
             playerPosition.row -= 1
         }
+        let newBoxNode = checkNextTwoCells(rowIndex - 2, cellIndex)
+        if (newBoxNode.dataset.type !== "wall" || newBoxNode.classList.contains("box")){
+            console.log("hello")
+            newBoxNode.classList.remove("hall", "start", "boxDestination")
+            // newBoxNode.dataset.type.remove("hall")
+            newBoxNode.classList.add("box")
+            }
     }
     if (keyName === "ArrowLeft") {
-        let newCellNode = findCellByCoordinates(rowIndex, cellIndex - 1)
+        let newCellNode = findCellByCoordinates(rowIndex, cellIndex - 2)
         if (newCellNode.dataset.type !== "wall") {
             moveToward(newCellNode, keyName)
             playerPosition.column -= 1
         }
+        let newBoxNode = checkNextTwoCells(rowIndex, cellIndex - 2)
+        if (newBoxNode.dataset.type !== "wall" || newBoxNode.classList.contains("box")){
+            console.log("hello")
+            newBoxNode.classList.remove("hall", "start", "boxDestination")
+            // newBoxNode.dataset.type.remove("hall")
+            newBoxNode.classList.add("box")
+            }
     }
 
     if (keyName === "ArrowRight") {
@@ -143,15 +172,21 @@ document.addEventListener('keydown', (event) => {
             moveToward(newCellNode, keyName)
             playerPosition.column += 1
         }
+        let newBoxNode = checkNextTwoCells(rowIndex + 2, cellIndex)
+        if (newBoxNode.dataset.type !== "wall" || newBoxNode.classList.contains("box")){
+            console.log("hello")
+            newBoxNode.classList.remove("hall", "start", "boxDestination")
+            // newBoxNode.dataset.type.remove("hall")
+            newBoxNode.classList.add("box")
+            }
     }
-
     // if () the boxes are in the right place, call the addWinMessage function
 })
 
 function addWinMessage() {
-        const message = document.createTextNode("You win!");
-        const newP = document.createElement("p");
-        const destination = document.getElementById("winMessage");
-        newP.appendChild(message);
-        destination.appendChild(newP);
-    }
+    const message = document.createTextNode("You win!");
+    const newP = document.createElement("p");
+    const destination = document.getElementById("winMessage");
+    newP.appendChild(message);
+    destination.appendChild(newP);
+}
