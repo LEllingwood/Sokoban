@@ -1,8 +1,19 @@
-/* body {
+body {
     display: flex;
     align-items: center;
-} */
+    flex-direction: column;
+}
 
+h1 {
+    margin: auto;
+    color: palevioletred;
+    text-shadow: 0 0 6px green;
+
+}
+
+h3 {
+    color: palevioletred;
+}
 .row {
     margin: 0;
     padding: 0;
@@ -58,7 +69,14 @@
 #gameboard {
     font-size: larger;
 }
-
+#refresh {
+    background-color: green;
+    border: 2px solid black;
+    font-size: 20px;
+    color: white;
+    text-shadow: 0 0 6px black;
+    
+}
 /* [data-hallType-start] {
 background-color: pink;
-} */
+ */

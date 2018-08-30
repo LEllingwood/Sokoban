@@ -174,3 +174,11 @@ function addWinMessage() {
     newP.appendChild(message);
     destination.appendChild(newP);
 }
+
+function initView() {
+    askAllColumnsToListenForClick()
+    document.getElementById("refresh").addEventListener("click", function () {
+        window.top.location.reload();
+    })
+}
+initView()
