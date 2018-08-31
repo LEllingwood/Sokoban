@@ -12,9 +12,9 @@ const map = [
 
 const gameboard = document.getElementById("gameboard");
 const playerElement = createPlayer();
-const playerPosition = {
-    row: 2,
-    column: 2,
+let playerPosition = {
+    row: 0,
+    column: 0,
 }
 
 for (let rowIndex = 0; rowIndex < map.length; rowIndex++) {
@@ -55,54 +55,44 @@ function createCellElement(cellCharacter, rowIndex, cellIndex) {
             break
         case " ":
             cellElement.dataset.type = "hall"
-            // cellElement.dataset.hallType = "normal"
             cellElement.classList.add("hall")
             break
         case "S":
             cellElement.dataset.type = "hall"
-            // cellElement.dataset.hallType = "start"
             cellElement.classList.add("start")
+            playerPosition.row = rowIndex
+            playerPosition.column = cellIndex
+            console.log(playerPosition)
+            cellElement.appendChild(playerElement)
             break
         case "B":
             cellElement.dataset.type = "hall"
-            // cellElement.dataset.hallType = "normal"
             cellElement.classList.add("box")
             break
         case "O":
             cellElement.dataset.type = "hall"
-            // cellElement.dataset.hallType = "destination"
             cellElement.classList.add("boxDestination");
             break
         case "X":
             cellElement.dataset.type = "hall"
-            // cellElement.dataset.hallType = "destination"
             cellElement.classList.add("box", "boxDestination")
             break
     }
-    // fiddle with the formatting to separate items and need to make "box" class more important than "cell" class
     cellElement.classList.add(cellElement.dataset.type, "cell")
     cellElement.dataset.rowIndex = rowIndex;
     cellElement.dataset.cellIndex = cellIndex;
     return cellElement
 }
 // switch case is basically a big if else statement
-
 function movePlayerToward(nextCellElement, keyName) {
     nextCellElement.appendChild(playerElement)
 }
 
-
-// if (nextCellElement.classList.contains("box")){  
-// check via type to see if it's a wall.  maybe move this up one line (if statment)
-// somewhere we will check the cell to see if it's a wall or a box. remove box class from one cell element only when the next two boxes are halls (and adding it to the one after).
-// }
 function findCellByCoordinates(rowIndex, cellIndex) {
     const rowIndexSelector = "[data-row-index='" + rowIndex + "']"
     const cellIndexSelector = "[data-cell-index='" + cellIndex + "']"
     const cellSelector = "#gameboard .row " + rowIndexSelector + cellIndexSelector
     return document.querySelector(cellSelector)
-
-    // this function will search the DOM for a cell that meets both the row and cell types
 }
 
 function isWall(cell) {
@@ -145,9 +135,6 @@ function attemptMove(rowIndex, cellIndex, keyName) {
 
     checkWin()
 }
-// search dom for all elements that have both classes (box destination and box) and then check count. (countElement?) 
-
-// event handler for moving keys based on arrow press:
 document.addEventListener('keydown', (event) => {
     let keyName = event.key;
     let rowIndex = playerPosition.row
@@ -176,7 +163,7 @@ function addWinMessage() {
 }
 
 function initView() {
-    askAllColumnsToListenForClick()
+    createCellElement()
     document.getElementById("refresh").addEventListener("click", function () {
         window.top.location.reload();
     })
